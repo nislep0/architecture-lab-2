@@ -1,4 +1,4 @@
-package lab2
+п»їpackage lab2
 
 import (
 	"errors"
@@ -6,7 +6,8 @@ import (
 	"strings"
 	"unicode"
 )
-
+// PrefixToPostfix РїРµСЂРµС‚РІРѕСЂСЋС” РїСЂРµС„С–РєСЃРЅРёР№ РІРёСЂР°Р· Сѓ РїРѕСЃС‚С„С–РєСЃРЅРёР№.
+// РџС–РґС‚СЂРёРјСѓСЋС‚СЊСЃСЏ РѕРїРµСЂР°С‚РѕСЂРё +, -, *, /, ^.
 func PostfixToInfix(input string) (string, error) {
 	if strings.TrimSpace(input) == "" {
 		return "", errors.New("input is empty")
@@ -20,18 +21,18 @@ func PostfixToInfix(input string) (string, error) {
 	}
 
 	for _, token := range tokens {
-		// Якщо операнд (може бути багатозначне число)
+		
 		if isOperator(token) {
-			// Потрібно два операнди в стеку
+			
 			if len(stack) < 2 {
 				return "", fmt.Errorf("invalid expression: not enough operands for operator '%s'", token)
 			}
-			// Витягуємо два операнди з кінця стека
+			
 			right := stack[len(stack)-1]
 			left := stack[len(stack)-2]
 			stack = stack[:len(stack)-2]
 
-			// Формуємо новий вираз
+			
 			expr := fmt.Sprintf("(%s %s %s)", left, token, right)
 			stack = append(stack, expr)
 		} else if isValidOperand(token) {
@@ -49,7 +50,7 @@ func PostfixToInfix(input string) (string, error) {
 }
 
 func isValidOperand(token string) bool {
-	// Дозволимо числові значення з десятковою крапкою
+	
 	for i, r := range token {
 		if !(unicode.IsDigit(r) || r == '.') || (r == '.' && (i == 0 || i == len(token)-1)) {
 			return false
